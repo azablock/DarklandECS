@@ -1,0 +1,9 @@
+{
+  "requiredComponents": [
+    "Position"
+  ],
+  "inherits": [
+
+  ],
+  "name": "Movement"
+}

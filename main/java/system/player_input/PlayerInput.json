@@ -1,0 +1,9 @@
+{
+  "requiredComponents": [
+    "PlayerInput"
+  ],
+  "inherits": [
+
+  ],
+  "name": "PlayerInput"
+}

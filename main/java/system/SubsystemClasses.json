@@ -1,0 +1,6 @@
+{
+  "subsystems": [
+    "PlayerInput",
+    "Movement"
+  ]
+}
