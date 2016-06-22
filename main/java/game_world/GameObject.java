@@ -1,14 +1,13 @@
 package game_world;
 
 import component.Component;
-import entity.EntityManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 
-import static entity.EntityManager.*;
+import static entity.EntityManager.ENTITY_MANAGER;
 
 public class GameObject {
 
@@ -21,11 +20,6 @@ public class GameObject {
     private GameObject(@NotNull final UUID entity, @NotNull final String humanReadableName) {
         this.entity = entity;
         this.humanReadableName = humanReadableName;
-    }
-
-    @NotNull
-    public static GameObject load(@NotNull final UUID entity) {
-        return new GameObject(entity, ENTITY_MANAGER.nameFor(entity));
     }
 
     private GameObject() {
@@ -48,6 +42,11 @@ public class GameObject {
 
         for (Component component : components)
             this.add(component);
+    }
+
+    @NotNull
+    public static GameObject load(@NotNull final UUID entity) {
+        return new GameObject(entity, ENTITY_MANAGER.nameFor(entity));
     }
 
     public void add(@NotNull final Component component) {
@@ -80,12 +79,11 @@ public class GameObject {
     public List<? extends Component> getAll() {
         return ENTITY_MANAGER.allComponentsOfEntity(entity);
     }
-    
+
     public void removeAll() {
         getAll().forEach(this::remove);
     }
 
-    @NotNull
     public void kill() {
         ENTITY_MANAGER.killEntity(entity);
     }
@@ -97,6 +95,6 @@ public class GameObject {
 
     @NotNull
     public String getInternalName() {
-        return humanReadableName == null ? humanReadableName : "no humanReadable name";
+        return humanReadableName != null ? humanReadableName : "no humanReadableName";
     }
 }

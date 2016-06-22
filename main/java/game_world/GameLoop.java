@@ -4,9 +4,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-import system.Subsystem;
+import subsystem.Subsystem;
 
-import static system.SubsystemManager.*;
+import static subsystem.SubsystemManager.*;
 
 
 public class GameLoop {

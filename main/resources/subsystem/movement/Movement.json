@@ -1,9 +1,12 @@
 {
+  "inherits": [
+
+  ],
   "requiredComponents": [
     "Position"
   ],
-  "inherits": [
-
+  "eventTypes": [
+    "Movement"
   ],
   "name": "Movement"
 }
