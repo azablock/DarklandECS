@@ -2,12 +2,14 @@ package event;
 
 import game_world.GameObject;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 
+@Deprecated
 public class EventManager {
 
     @NotNull
@@ -18,13 +20,10 @@ public class EventManager {
 
     private EventManager() {
         eventsContainer = new HashMap<>();
-        //fixme: iteracja dla kazdego TYPU eventu???
-//        SUBSYSTEM_MANAGER.subsystems.forEach(subsystem -> eventsContainer.put(subsystem.getClass(), new HashMap<>()));
     }
 
-    public void receiveEvent(@NotNull final GameObject gameObject,
-                             @NotNull final Event event) {
-        UUID entity = gameObject.entity();
+    public void receiveEvent(@NotNull final Event event) {
+        UUID entity = event.entity();
         Map<String, LinkedList<String>> eventsForEntity = eventsContainer.get(entity);
 
         if (eventsForEntity == null) {
@@ -40,23 +39,25 @@ public class EventManager {
 
         events.addLast(event.description());
     }
-//
-//    @NotNull
-//    public String nextEventFor(@NotNull final Class<? extends Subsystem> subsystemClass,
-//                               @NotNull final UUID entity) {
-//        LinkedList<String> events = eventsContainer.get(subsystemClass).get(entity);
-//        String event = events.getFirst();
-//
-//        events.removeFirst();
-//
-//        return event;
-//    }
-//
-//    @Deprecated
-//    public boolean hasEventFor(@NotNull final Class<? extends Subsystem> subsystemClass,
-//                               @NotNull final UUID entity) {
-//        LinkedList<String> events = eventsContainer.get(subsystemClass).get(entity);
-//
-//        return events != null && !events.isEmpty();
-//    }
+
+    @Nullable
+    public String nextEventFor(@NotNull final UUID entity, @NotNull final String eventName) {
+        LinkedList<String> events = eventsContainer.get(entity).get(eventName);
+        String event = events.getFirst();
+
+        events.removeFirst();
+        return event;
+    }
+
+    public boolean hasEventFor(@NotNull final UUID entity, @NotNull final String eventName) {
+        Map<String, LinkedList<String>> eventsForEntity = eventsContainer.get(entity);
+
+        if(eventsForEntity == null) {
+            return false;
+        }
+        
+        LinkedList<String> events = eventsForEntity.get(eventName);
+
+        return events != null && !events.isEmpty();
+    }
 }

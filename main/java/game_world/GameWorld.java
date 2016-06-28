@@ -7,17 +7,17 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 
-import static game_world.GameLoop.*;
+import static game_world.GameLoop.GAME_LOOP;
 
 public class GameWorld {
+
+    public final static GameWorld GAME_WORLD = new GameWorld();
 
     public final Scene scene;
 
     public final Group parentGroup;
 
     private final GameObject playerGameObject;
-
-    public final static GameWorld GAME_WORLD = new GameWorld();
 
     private GameWorld() {
         parentGroup = new Group();
@@ -32,7 +32,6 @@ public class GameWorld {
         playerGameObject.add(new CVelocity());
         playerGameObject.add(new CPlayerInput());
 
-        // TODO: 6/19/2016 do usuniecia cala metoda
         scene.setOnKeyPressed(event -> {
             CPlayerInput playerInput = playerGameObject.get(CPlayerInput.class);
             playerInput.keyboardEvents.addLast(event);

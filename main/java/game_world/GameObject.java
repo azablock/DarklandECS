@@ -1,52 +1,45 @@
 package game_world;
 
 import component.Component;
+import entity.EntityManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 
-import static entity.EntityManager.ENTITY_MANAGER;
+import static entity.EntityManager.*;
 
 public class GameObject {
 
     @NotNull
     private final UUID entity;
 
-    @Nullable
-    private String humanReadableName = null;
-
-    private GameObject(@NotNull final UUID entity, @NotNull final String humanReadableName) {
+    private GameObject(@NotNull final UUID entity) {
         this.entity = entity;
-        this.humanReadableName = humanReadableName;
-    }
-
-    private GameObject() {
-        entity = ENTITY_MANAGER.createEntity();
-    }
-
-    public GameObject(@NotNull final String internalName) {
-        entity = ENTITY_MANAGER.createEntity(internalName);
-    }
-
-    public GameObject(@NotNull final Component... components) {
-        this();
-
-        for (Component component : components)
-            this.add(component);
-    }
-
-    public GameObject(@NotNull final String internalName, @NotNull final Component... components) {
-        entity = ENTITY_MANAGER.createEntity(internalName);
-
-        for (Component component : components)
-            this.add(component);
     }
 
     @NotNull
     public static GameObject load(@NotNull final UUID entity) {
-        return new GameObject(entity, ENTITY_MANAGER.nameFor(entity));
+        return new GameObject(entity);
+    }
+
+    public GameObject(@NotNull final String humanReadableName) {
+        entity = ENTITY_MANAGER.createEntity(humanReadableName);
+    }
+
+    public GameObject(@NotNull final Component... components) {
+        entity = ENTITY_MANAGER.createEntity();
+
+        for (Component component : components)
+            this.add(component);
+    }
+
+    public GameObject(@NotNull final String humanReadableName, @NotNull final Component... components) {
+        entity = ENTITY_MANAGER.createEntity(humanReadableName);
+
+        for (Component component : components)
+            this.add(component);
     }
 
     public void add(@NotNull final Component component) {
@@ -94,7 +87,8 @@ public class GameObject {
     }
 
     @NotNull
-    public String getInternalName() {
+    public String humanReadableName() {
+        String humanReadableName = ENTITY_MANAGER.nameFor(entity);
         return humanReadableName != null ? humanReadableName : "no humanReadableName";
     }
 }

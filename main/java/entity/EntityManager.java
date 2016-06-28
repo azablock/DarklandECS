@@ -2,6 +2,7 @@ package entity;
 
 import component.Component;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -188,7 +189,7 @@ public class EntityManager {
         entityHumanReadableNames.put(entity, name);
     }
 
-    @NotNull
+    @Nullable
     public String nameFor(@NotNull final UUID uuid) {
         return entityHumanReadableNames.get(uuid);
     }

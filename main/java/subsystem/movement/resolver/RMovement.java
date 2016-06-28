@@ -1,19 +1,14 @@
 package subsystem.movement.resolver;
 
-import event.Event;
+import component.Component;
+import event.Resolver;
 import game_world.GameObject;
 import org.jetbrains.annotations.NotNull;
 
-public class RMovement implements EventResolver {
+public class RMovement implements Resolver {
 
     @Override
-    public void resolve(@NotNull GameObject gameObject, @NotNull Event event) {
+    public void resolve(@NotNull GameObject gameObject) {
 
-    }
-
-    @NotNull
-    @Override
-    public String isDedicatedFor(@NotNull String eventName) {
-        return "";
     }
 }
