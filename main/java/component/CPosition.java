@@ -1,21 +1,23 @@
 package component;
 
+import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
 
 public class CPosition implements Component {
 
-    public final Integer x;
+    public Point2D position;
 
-    public final Integer y;
+    public CPosition(Point2D position) {
+        this.position = position;
+    }
 
-    public CPosition(Integer x, Integer y) {
-        this.x = x;
-        this.y = y;
+    public CPosition() {
+        position = Point2D.ZERO;
     }
 
     @Override
     public String toString() {
-        return String.format(simpleName() + "{x=%d, y=%d}", x, y);
+        return String.format("CPosition{position=%s}", position);
     }
 
     @NotNull

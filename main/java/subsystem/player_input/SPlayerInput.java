@@ -4,16 +4,20 @@ import component.CPlayerInput;
 import component.CPosition;
 import component.CVelocity;
 import subsystem.Subsystem;
-import subsystem.player_input.handler.RKeyPressed;
+import subsystem.player_input.resolver.key_pressed.RKeyPressed;
+
+import java.util.Arrays;
 
 public class SPlayerInput extends Subsystem {
 
     @Override
     public void initialize() {
-        resolvers.put(RKeyPressed.class, new RKeyPressed());
+        resolvers.add(new RKeyPressed());
 
-        requiredComponentTypes.add(CPlayerInput.class);
-        requiredComponentTypes.add(CPosition.class);
-        requiredComponentTypes.add(CVelocity.class);
+        requiredComponentTypes.addAll(Arrays.asList(
+                CPlayerInput.class,
+//                CPosition.class,
+                CVelocity.class
+        ));
     }
 }

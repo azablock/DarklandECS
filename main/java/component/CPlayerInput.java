@@ -14,9 +14,12 @@ public class CPlayerInput implements Component {
     @NotNull
     public final LinkedList<KeyEvent> keyboardEvents;
 
+    public boolean keyAlreadyPressed;
+
     public CPlayerInput() {
         mouseEvents = new LinkedList<>();
         keyboardEvents = new LinkedList<>();
+        keyAlreadyPressed = false;
     }
 
     @NotNull

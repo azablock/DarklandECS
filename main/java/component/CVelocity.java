@@ -5,12 +5,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class CVelocity implements Component {
 
-    public final Point2D movementSpeedVector;
+    public Point2D movementVector;
+
+    public Point2D movementSpeedDelta;
 
     public final Double maxSpeed;
 
     public CVelocity() {
-        this.movementSpeedVector = new Point2D(0.0, 0.0);
+        movementVector = Point2D.ZERO;
+        movementSpeedDelta = Point2D.ZERO;
         maxSpeed = 10.0;
     }
 

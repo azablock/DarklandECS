@@ -3,6 +3,7 @@ package subsystem;
 import org.jetbrains.annotations.NotNull;
 import subsystem.movement.SMovement;
 import subsystem.player_input.SPlayerInput;
+import subsystem.render.SRender;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +23,8 @@ public class SubsystemManager {
         // TODO: 6/19/2016 tymczasowe rozwizanie
         subsystems.addAll(Arrays.asList(
                 new SPlayerInput(),
-                new SMovement()
+                new SMovement(),
+                new SRender()
         ));
     }
 }

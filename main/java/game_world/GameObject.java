@@ -1,14 +1,12 @@
 package game_world;
 
 import component.Component;
-import entity.EntityManager;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 
-import static entity.EntityManager.*;
+import static entity.EntityManager.ENTITY_MANAGER;
 
 public class GameObject {
 
@@ -17,11 +15,6 @@ public class GameObject {
 
     private GameObject(@NotNull final UUID entity) {
         this.entity = entity;
-    }
-
-    @NotNull
-    public static GameObject load(@NotNull final UUID entity) {
-        return new GameObject(entity);
     }
 
     public GameObject(@NotNull final String humanReadableName) {
@@ -40,6 +33,11 @@ public class GameObject {
 
         for (Component component : components)
             this.add(component);
+    }
+
+    @NotNull
+    public static GameObject load(@NotNull final UUID entity) {
+        return new GameObject(entity);
     }
 
     public void add(@NotNull final Component component) {

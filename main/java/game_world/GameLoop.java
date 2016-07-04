@@ -22,7 +22,7 @@ public class GameLoop {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
         timeline.getKeyFrames().add(new KeyFrame(
-                Duration.millis(1000.0 / 2.0),
+                Duration.millis(1000.0 / 60.0),
                 event -> SUBSYSTEM_MANAGER.subsystems.forEach(Subsystem::update))
         );
     }
