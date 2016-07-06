@@ -84,10 +84,10 @@ public class EntityManager {
 
     public <T extends Behavior> boolean hasBehavior(@NotNull final UUID entity,
                                                     @NotNull final Class<T> behaviorType) {
-        Collection<Behavior> Behaviors = allBehaviorsOfEntity(entity);
+        Collection<Behavior> behaviors = allBehaviorsOfEntity(entity);
         boolean hasBehavior = false;
 
-        for (Behavior Behavior : Behaviors)
+        for (Behavior Behavior : behaviors)
             if (Behavior.getClass() == behaviorType) {
                 hasBehavior = true;
                 break;
@@ -98,15 +98,15 @@ public class EntityManager {
 
     @NotNull
     public <T extends Behavior> List<T> allBehaviorsOfEntity(@NotNull final UUID entity) {
-        List<T> Behaviors = new LinkedList<>();
+        List<T> behaviors = new LinkedList<>();
 
         behaviorStores.values().forEach(store -> {
             T BehaviorFromThisEntity = (T) store.get(entity);
             if (BehaviorFromThisEntity != null)
-                Behaviors.add(BehaviorFromThisEntity);
+                behaviors.add(BehaviorFromThisEntity);
         });
 
-        return Behaviors;
+        return behaviors;
     }
 
     @NotNull
@@ -124,7 +124,7 @@ public class EntityManager {
         Set<UUID> allEntitiesPossessingBehavior = new HashSet<>();
 
         allBehaviorsOfType(behaviorType).forEach(
-                Behavior -> allEntitiesPossessingBehavior.addAll(behaviorStores.get(Behavior.getClass()).keySet()));
+                behavior -> allEntitiesPossessingBehavior.addAll(behaviorStores.get(behavior.getClass()).keySet()));
 
         return allEntitiesPossessingBehavior;
     }
