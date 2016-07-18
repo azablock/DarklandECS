@@ -5,6 +5,7 @@ import dl.behavior.BPosition;
 import dl.behavior.BSprite;
 import dl.behavior.BVelocity;
 import dl.entity.EntityManager;
+import dl.entity.EntityProviderService;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -26,6 +27,9 @@ public class GameWorld {
     private EntityManager em;
 
     @Autowired
+    private EntityProviderService eps;
+
+    @Autowired
     private GameLoop gameLoop;
 
     @NotNull
@@ -40,12 +44,7 @@ public class GameWorld {
 
     @PostConstruct
     private void init() {
-        playerEntity = em.createEntity("Rycerzyk");
-
-        em.addBehavior(playerEntity, new BPosition(new Point2D(12.0, 10.0)));
-        em.addBehavior(playerEntity, new BVelocity());
-        em.addBehavior(playerEntity, new BPlayerInput());
-        em.addBehavior(playerEntity, new BSprite());
+        playerEntity = eps.newInstanceOf("Player");
 
         gameLoop.start();
 
