@@ -2,8 +2,8 @@ package dl;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import static dl.game_world.GameWorld.GAME_WORLD;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main extends Application {
 
@@ -14,8 +14,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("https://www.youtube.com/watch?v=U03XXzcThGU");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("dl/meta-info/darkland-spring-context.xml");
 
-        primaryStage.setScene(GAME_WORLD.scene);
+//        primaryStage.setScene(gameWorld.scene);
         primaryStage.show();
     }
 }

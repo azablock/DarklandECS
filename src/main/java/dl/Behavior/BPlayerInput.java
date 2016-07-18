@@ -1,4 +1,4 @@
-package dl.Behavior;
+package dl.behavior;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -14,12 +14,12 @@ public class BPlayerInput implements Behavior {
     @NotNull
     public final LinkedList<KeyEvent> keyboardEvents;
 
-    public boolean keyAlreadyPressed;
+    public boolean isKeyPressed;
 
     public BPlayerInput() {
         mouseEvents = new LinkedList<>();
         keyboardEvents = new LinkedList<>();
-        keyAlreadyPressed = false;
+        isKeyPressed = false;
     }
 
     @NotNull

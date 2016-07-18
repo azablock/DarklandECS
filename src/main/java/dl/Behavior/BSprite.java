@@ -1,4 +1,4 @@
-package dl.Behavior;
+package dl.behavior;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;

@@ -1,6 +1,6 @@
 package dl.subsystem;
 
-import dl.Behavior.Behavior;
+import dl.behavior.Behavior;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

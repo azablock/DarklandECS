@@ -3,12 +3,14 @@ package dl.subsystem.player_input.resolver.key_pressed.helper;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import org.jetbrains.annotations.NotNull;
-import dl.subsystem.Initializable;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Set;
 
-public class HVelocityMagnitude implements Initializable {
+@Component
+public class HVelocityMagnitude {
 
     private static HashMap<KeyCode, Point2D> velocityMagnitudes;
 
@@ -20,7 +22,7 @@ public class HVelocityMagnitude implements Initializable {
         initialize();
     }
 
-    @Override
+    @PostConstruct
     public void initialize() {
         velocityMagnitudes.put(KeyCode.UP, new Point2D(0.0, -1.0));
         velocityMagnitudes.put(KeyCode.RIGHT, new Point2D(1.0, 0.0));

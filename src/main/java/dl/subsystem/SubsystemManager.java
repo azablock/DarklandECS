@@ -1,30 +1,40 @@
 package dl.subsystem;
 
-import org.jetbrains.annotations.NotNull;
 import dl.subsystem.movement.SMovement;
 import dl.subsystem.player_input.SPlayerInput;
 import dl.subsystem.render.SRender;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class SubsystemManager {
+import static java.util.Arrays.asList;
 
-    @NotNull
-    public final static SubsystemManager SUBSYSTEM_MANAGER = new SubsystemManager();
+@Component
+public class SubsystemManager {
 
     @NotNull
     public final List<Subsystem> subsystems;
 
-    private SubsystemManager() {
+    @Autowired
+    private SPlayerInput sPlayerInput;
+
+    @Autowired
+    private SMovement sMovement;
+
+    @Autowired
+    private SRender sRender;
+
+    public SubsystemManager() {
         subsystems = new ArrayList<>();
 
         // TODO: 6/19/2016 tymczasowe rozwizanie
-        subsystems.addAll(Arrays.asList(
-                new SPlayerInput(),
-                new SMovement(),
-                new SRender()
+        subsystems.addAll(asList(
+                sPlayerInput,
+                sMovement,
+                sRender
         ));
     }
 }

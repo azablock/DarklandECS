@@ -1,4 +1,4 @@
-package dl.Behavior;
+package dl.behavior;
 
 import org.jetbrains.annotations.NotNull;
 

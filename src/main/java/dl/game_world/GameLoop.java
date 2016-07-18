@@ -1,29 +1,30 @@
 package dl.game_world;
 
+import dl.subsystem.Subsystem;
+import dl.subsystem.SubsystemManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-import dl.subsystem.Subsystem;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import static dl.subsystem.SubsystemManager.*;
-
-
+@Component
 public class GameLoop {
+
+    @Autowired
+    private SubsystemManager subsystemManager;
 
     @NotNull
     private final Timeline timeline;
 
-    @NotNull
-    public final static GameLoop GAME_LOOP = new GameLoop();
-
-    private GameLoop() {
+    public GameLoop() {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
 
         timeline.getKeyFrames().add(new KeyFrame(
                 Duration.millis(1000.0 / 60.0),
-                event -> SUBSYSTEM_MANAGER.subsystems.forEach(Subsystem::update))
+                event -> subsystemManager.subsystems.forEach(Subsystem::update))
         );
     }
 

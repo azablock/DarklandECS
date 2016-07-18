@@ -1,4 +1,4 @@
-package dl.Behavior;
+package dl.behavior;
 
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;

@@ -1,6 +1,6 @@
 package dl.subsystem.movement.resolver.helper;
 
-import dl.Behavior.BPosition;
+import dl.behavior.BPosition;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
 

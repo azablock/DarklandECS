@@ -1,18 +1,21 @@
 package dl.entity;
 
-import dl.Behavior.BPosition;
-import dl.Behavior.BVelocity;
-import dl.Behavior.Behavior;
+import dl.behavior.BPosition;
+import dl.behavior.BVelocity;
+import dl.behavior.Behavior;
 import dl.test.BaseSpringTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,16 +24,17 @@ import static org.mockito.Mockito.mock;
 
 public class EntityManagerTest extends BaseSpringTest {
 
-    Logger LOG = LoggerFactory.getLogger(EntityManagerTest.class);
+    private Logger LOG = LoggerFactory.getLogger(EntityManagerTest.class);
 
     @Autowired
-    private EntityManager entityManager;
+    private EntityManager em;
 
     private UUID entity;
 
     @Before
-    public void clearEntityManager() throws Exception {
-        entity = entityManager.createEntity();
+    public void prepareTestEntity() throws Exception {
+        LOG.debug(String.valueOf(em.entityCount()));
+        entity = em.createEntity();
     }
 
     @Test(expected = RuntimeException.class)
@@ -38,11 +42,10 @@ public class EntityManagerTest extends BaseSpringTest {
         //given
         Behavior bPosition = mock(BPosition.class);
         Behavior anotherBPosition = mock(BPosition.class);
-        UUID entity = UUID.randomUUID();
 
         //when
-        entityManager.addBehavior(entity, bPosition);
-        entityManager.addBehavior(entity, anotherBPosition);
+        em.addBehavior(entity, bPosition);
+        em.addBehavior(entity, anotherBPosition);
 
         //then
     }
@@ -54,11 +57,11 @@ public class EntityManagerTest extends BaseSpringTest {
         Behavior cVelocity = mock(BVelocity.class);
 
         //when
-        entityManager.addBehavior(entity, bPosition);
-        entityManager.addBehavior(entity, cVelocity);
+        em.addBehavior(entity, bPosition);
+        em.addBehavior(entity, cVelocity);
 
         //then
-        assertThat(entityManager.behaviorCount(), is(2));
+        assertThat(em.behaviorCount(), is(2));
     }
 
     @Test(expected = RuntimeException.class)
@@ -67,8 +70,8 @@ public class EntityManagerTest extends BaseSpringTest {
         Behavior bPosition = new BPosition();
 
         //when
-        entityManager.addBehavior(entity, bPosition);
-        entityManager.removeBehavior(entity, BVelocity.class);
+        em.addBehavior(entity, bPosition);
+        em.removeBehavior(entity, BVelocity.class);
         //then
     }
 
@@ -78,11 +81,11 @@ public class EntityManagerTest extends BaseSpringTest {
         Behavior bPosition = mock(BPosition.class);
 
         //when
-        entityManager.addBehavior(entity, bPosition);
-        entityManager.removeBehavior(entity, bPosition.getClass());
+        em.addBehavior(entity, bPosition);
+        em.removeBehavior(entity, bPosition.getClass());
 
         //then
-        assertThat(entityManager.behaviorCount(), is(0));
+        assertThat(em.behaviorCount(), is(0));
     }
 
     @Test
@@ -91,24 +94,24 @@ public class EntityManagerTest extends BaseSpringTest {
         Behavior bPosition = mock(BPosition.class);
 
         //when
-        entityManager.addBehavior(entity, bPosition);
-        entityManager.removeBehavior(entity, bPosition);
+        em.addBehavior(entity, bPosition);
+        em.removeBehavior(entity, bPosition);
 
         //then
-        assertThat(entityManager.behaviorCount(), is(0));
+        assertThat(em.behaviorCount(), is(0));
     }
 
     @Test
     public void shouldCollectAllBehaviorsOfType() throws Exception {
         //given
-        for(int i = 0; i < 3; i++) {
-            UUID someEntity = entityManager.createEntity();
-            entityManager.addBehavior(someEntity, new BPosition());
+        for (int i = 0; i < 3; i++) {
+            UUID someEntity = em.createEntity();
+            em.addBehavior(someEntity, new BPosition());
         }
 
         //when
-        Collection<BPosition> allBehaviorsOfType = entityManager.allBehaviorsOfType(BPosition.class);
-        Set<UUID> entitiesWithPosition = entityManager.entitiesPossessingBehavior(BPosition.class);
+        Collection<BPosition> allBehaviorsOfType = em.allBehaviorsOfType(BPosition.class);
+        Set<UUID> entitiesWithPosition = em.entitiesPossessingBehavior(BPosition.class);
 
         //then
         assertThat(allBehaviorsOfType.size(), is(3));
@@ -121,10 +124,10 @@ public class EntityManagerTest extends BaseSpringTest {
         Behavior bPosition = new BPosition();
 
         //when
-        entityManager.addBehavior(entity, bPosition);
+        em.addBehavior(entity, bPosition);
 
         //then
-        assertTrue(entityManager.hasBehavior(entity, BPosition.class));
+        assertTrue(em.hasBehavior(entity, BPosition.class));
     }
 
     @Test
@@ -132,9 +135,9 @@ public class EntityManagerTest extends BaseSpringTest {
         //given
 
         //when
-        entityManager.killEntity(entity);
+        em.killEntity(entity);
 
         //then
-        assertThat(entityManager.entityCount(), is(0));
+        assertThat(em.entityCount(), is(0));
     }
 }

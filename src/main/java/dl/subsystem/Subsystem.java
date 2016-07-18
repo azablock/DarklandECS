@@ -1,18 +1,20 @@
 package dl.subsystem;
 
-import dl.Behavior.Behavior;
+import dl.behavior.Behavior;
 import dl.entity.EntityManager;
-import dl.game_world.GameObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
-public abstract class Subsystem implements Initializable {
+@Component
+public abstract class Subsystem {
 
     @Autowired
-    private EntityManager entityManager;
+    public EntityManager entityManager;
 
     @NotNull
     public final Set<Class<? extends Behavior>> requiredBehaviorTypes;
@@ -25,22 +27,21 @@ public abstract class Subsystem implements Initializable {
 //        requiredBehaviorTypes = new HashSet<>(SubsystemInitializerService.initialize(this.getClass().getName()));
         requiredBehaviorTypes = new HashSet<>();
         resolvers = new HashSet<>();
-        initialize();
     }
 
     public final void update() {
         entityManager
                 .entitiesPossessingBehaviors(requiredBehaviorTypes)
                 .stream()
-                .map(GameObject::load)
+//                .map(entityManager::gameObject)
                 .forEach(this::process);
     }
 
-    private void process(@NotNull final GameObject gameObject) {
+    private void process(@NotNull final UUID entity) {
         resolvers
                 .stream()
-                .filter(resolver -> resolver.passedValidation(gameObject))
-                .forEach(validatedResolver -> validatedResolver.resolve(gameObject));
+                .filter(resolver -> resolver.passedValidation(entity))
+                .forEach(validatedResolver -> validatedResolver.resolve(entity));
     }
 
     @Override

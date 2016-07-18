@@ -1,15 +1,23 @@
 package dl.subsystem.render.resolver.renderer.helper;
 
-import dl.Behavior.BPosition;
-import dl.game_world.GameObject;
+import dl.behavior.BPosition;
+import dl.entity.EntityManager;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
+@Component
 public class TextByPosition {
 
-    public static void convertPositionToText(@NotNull Text text, @NotNull GameObject gameObject) {
-        BPosition cPosition = gameObject.get(BPosition.class);
+    @Autowired
+    private EntityManager em;
 
-        text.setText(gameObject.humanReadableName() + ": Position" + cPosition.position.toString());
+    public void convertPositionToText(@NotNull Text text, @NotNull UUID entity) {
+        BPosition cPosition = em.getBehavior(entity, BPosition.class);
+
+        text.setText(em.nameFor(entity) + ": Position" + cPosition.position.toString());
     }
 }

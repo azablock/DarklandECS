@@ -1,54 +1,53 @@
 package dl.game_world;
 
-import dl.Behavior.BPlayerInput;
-import dl.Behavior.BPosition;
-import dl.Behavior.BSprite;
-import dl.Behavior.BVelocity;
+import dl.behavior.BPlayerInput;
+import dl.behavior.BPosition;
+import dl.behavior.BVelocity;
+import dl.entity.EntityManager;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import static dl.game_world.GameLoop.GAME_LOOP;
+import java.util.UUID;
 
 public class GameWorld {
 
-    public final static GameWorld GAME_WORLD = new GameWorld();
+//    @Autowired
+//    private EntityManager em;
+//
+//    @Autowired
+//    private GameLoop gameLoop;
+//
+//    private UUID playerEntity;
+//
+//    public GameWorld() {
+//        playerEntity = em.createEntity("Rycerzyk");
+//
+//        em.addBehavior(playerEntity, new BPosition(new Point2D(10.0, 10.0)));
+//        em.addBehavior(playerEntity, new BVelocity());
+//        em.addBehavior(playerEntity, new BPlayerInput());
+////        em.addBehavior(playerEntity, new BSprite());
+//
+//        setInitialGameWorldState();
+//        gameLoop.start();
+//    }
 
-    public final Scene scene;
+//    private void setInitialGameWorldState() {
+//        parentGroup.getChildren().add(em.getBehavior(playerEntity, BSprite.class).sprite);
 
-    public final Group parentGroup;
-
-    private final GameObject playerGameObject;
-
-    private GameWorld() {
-        parentGroup = new Group();
-        scene = new Scene(parentGroup, 800, 600, Color.DARKRED);
-        playerGameObject = new GameObject("Dzielny RHycerz",
-                new BPosition(new Point2D(10.0, 10.0)),
-                new BVelocity(),
-                new BPlayerInput(),
-                new BSprite());
-        setInitialGameWorldState();
-        GAME_LOOP.start();
-    }
-
-    private void setInitialGameWorldState() {
-        parentGroup.getChildren().add(playerGameObject.get(BSprite.class).sprite);
-
-        scene.setOnKeyPressed(event -> {
-            BPlayerInput playerInput = playerGameObject.get(BPlayerInput.class);
-
-            if(!playerInput.keyAlreadyPressed) {
-                playerInput.keyboardEvents.addLast(event);
-                playerInput.keyAlreadyPressed = true;
-            }
-        });
-
-        scene.setOnKeyReleased(event -> {
-            BPlayerInput playerInput = playerGameObject.get(BPlayerInput.class);
-
-            playerInput.keyAlreadyPressed = false;
-        });
-    }
+//        scene.setOnKeyPressed(event -> {
+//            BPlayerInput playerInput = em.getBehavior(playerEntity, BPlayerInput.class);
+//
+//            if(!playerInput.isKeyPressed) {
+//                playerInput.keyboardEvents.addLast(event);
+//                playerInput.isKeyPressed = true;
+//            }
+//        });
+//
+//        scene.setOnKeyReleased(event -> {
+//            BPlayerInput playerInput = em.getBehavior(playerEntity, BPlayerInput.class);
+//
+//            playerInput.isKeyPressed = false;
+//        });
+//    }
 }

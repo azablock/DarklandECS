@@ -1,6 +1,6 @@
 package dl.entity;
 
-import dl.Behavior.Behavior;
+import dl.behavior.Behavior;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ public class EntityManager {
     @NotNull
     private final Map<Class<? extends Behavior>, HashMap<UUID, ? extends Behavior>> behaviorStores;
 
-    private EntityManager() {
+    public EntityManager() {
         entities = new ArrayList<>();
         entityHumanReadableNames = new HashMap<>();
         behaviorStores = new HashMap<>();
@@ -97,8 +97,8 @@ public class EntityManager {
     }
 
     @NotNull
-    public <T extends Behavior> List<T> allBehaviorsOfEntity(@NotNull final UUID entity) {
-        List<T> behaviors = new LinkedList<>();
+    public <T extends Behavior> Set<T> allBehaviorsOfEntity(@NotNull final UUID entity) {
+        Set<T> behaviors = new HashSet<>();
 
         behaviorStores.values().forEach(store -> {
             T BehaviorFromThisEntity = (T) store.get(entity);
@@ -118,6 +118,7 @@ public class EntityManager {
 
         return (Collection<T>) store.values();
     }
+
 
     @NotNull
     public <T extends Behavior> Set<UUID> entitiesPossessingBehavior(@NotNull final Class<T> behaviorType) {

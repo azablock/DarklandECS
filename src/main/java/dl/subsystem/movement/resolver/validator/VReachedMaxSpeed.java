@@ -1,17 +1,25 @@
 package dl.subsystem.movement.resolver.validator;
 
-import dl.Behavior.BVelocity;
-import dl.game_world.GameObject;
+import dl.behavior.BVelocity;
+import dl.entity.EntityManager;
+import dl.subsystem.Validator;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
-import dl.subsystem.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 //nie ten dl.subsystem
+@Component
 public class VReachedMaxSpeed implements Validator {
 
+    @Autowired
+    private EntityManager em;
+
     @Override
-    public boolean validate(@NotNull GameObject gameObject) {
-        BVelocity cVelocity = gameObject.get(BVelocity.class);
+    public boolean validate(@NotNull UUID entity) {
+        BVelocity cVelocity = em.getBehavior(entity, BVelocity.class);
         Point2D currentSpeed = cVelocity.movementVector;
         Point2D movementSpeedDelta = cVelocity.movementSpeedDelta;
 

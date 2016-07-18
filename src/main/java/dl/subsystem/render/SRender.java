@@ -1,17 +1,24 @@
 package dl.subsystem.render;
 
-import dl.Behavior.BPosition;
-import dl.Behavior.BSprite;
+import dl.behavior.BPosition;
+import dl.behavior.BSprite;
 import dl.subsystem.Subsystem;
 import dl.subsystem.render.resolver.renderer.RRenderer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
+@Component
 public class SRender extends Subsystem {
 
-    @Override
+    @Autowired
+    private RRenderer rRenderer;
+
+    @PostConstruct
     public void initialize() {
-        this.resolvers.add(new RRenderer());
+        this.resolvers.add(rRenderer);
 
         this.requiredBehaviorTypes.addAll(Arrays.asList(
                 BPosition.class,

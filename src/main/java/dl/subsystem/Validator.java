@@ -1,10 +1,10 @@
 package dl.subsystem;
 
-import dl.game_world.GameObject;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public interface Validator {
 
-    //default
-    boolean validate(@NotNull final GameObject gameObject);
+    boolean validate(@NotNull final UUID entity);
 }
