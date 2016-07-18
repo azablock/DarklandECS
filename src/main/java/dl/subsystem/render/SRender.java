@@ -17,7 +17,7 @@ public class SRender extends Subsystem {
     private RRenderer rRenderer;
 
     @PostConstruct
-    public void initialize() {
+    private void init() {
         this.resolvers.add(rRenderer);
 
         this.requiredBehaviorTypes.addAll(Arrays.asList(

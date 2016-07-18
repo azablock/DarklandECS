@@ -14,13 +14,13 @@ import java.util.UUID;
 public abstract class Subsystem {
 
     @Autowired
-    public EntityManager entityManager;
+    protected EntityManager em;
 
     @NotNull
-    public final Set<Class<? extends Behavior>> requiredBehaviorTypes;
+    protected final Set<Class<? extends Behavior>> requiredBehaviorTypes;
 
     @NotNull
-    public final Set<Resolver> resolvers;
+    protected final Set<Resolver> resolvers;
 
     protected Subsystem() {
         // TODO: 6/22/2016 pobieranie componentTypes z JSON
@@ -30,18 +30,14 @@ public abstract class Subsystem {
     }
 
     public final void update() {
-        entityManager
-                .entitiesPossessingBehaviors(requiredBehaviorTypes)
+        em.entitiesPossessingBehaviors(requiredBehaviorTypes)
                 .stream()
-//                .map(entityManager::gameObject)
                 .forEach(this::process);
     }
 
     private void process(@NotNull final UUID entity) {
-        resolvers
-                .stream()
-                .filter(resolver -> resolver.passedValidation(entity))
-                .forEach(validatedResolver -> validatedResolver.resolve(entity));
+        resolvers.stream()
+                .forEach(resolver -> resolver.handle(entity));
     }
 
     @Override

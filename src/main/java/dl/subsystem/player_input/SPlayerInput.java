@@ -17,7 +17,7 @@ public class SPlayerInput extends Subsystem {
     private RKeyPressed rKeyPressed;
 
     @PostConstruct
-    public void initialize() {
+    private void init() {
         resolvers.add(rKeyPressed);
 
         requiredBehaviorTypes.addAll(Arrays.asList(

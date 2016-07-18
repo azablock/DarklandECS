@@ -1,21 +1,16 @@
 package dl.subsystem.movement.resolver.validator;
 
 import dl.behavior.BVelocity;
-import dl.entity.EntityManager;
-import dl.subsystem.Validator;
+import dl.subsystem.ValidatorAbstract;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 //nie ten dl.subsystem
 @Component
-public class VReachedMaxSpeed implements Validator {
-
-    @Autowired
-    private EntityManager em;
+public class VReachedMaxSpeed extends ValidatorAbstract {
 
     @Override
     public boolean validate(@NotNull UUID entity) {

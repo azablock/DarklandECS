@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class GameLoop {
 
@@ -21,10 +23,13 @@ public class GameLoop {
     public GameLoop() {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
+    }
 
+    @PostConstruct
+    public void init() {
         timeline.getKeyFrames().add(new KeyFrame(
                 Duration.millis(1000.0 / 60.0),
-                event -> subsystemManager.subsystems.forEach(Subsystem::update))
+                event -> subsystemManager.subsystems().forEach(Subsystem::update))
         );
     }
 

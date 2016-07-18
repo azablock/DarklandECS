@@ -1,20 +1,15 @@
 package dl.subsystem.movement.resolver.validator;
 
 import dl.behavior.BVelocity;
-import dl.entity.EntityManager;
-import dl.subsystem.Validator;
+import dl.subsystem.ValidatorAbstract;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
-public class VIsMoving implements Validator {
-
-    @Autowired
-    private EntityManager em;
+public class VIsMoving extends ValidatorAbstract {
 
     @Override
     public boolean validate(@NotNull UUID entity) {

@@ -19,11 +19,10 @@ public class HVelocityMagnitude {
 
     private HVelocityMagnitude() {
         velocityMagnitudes = new HashMap<>();
-        initialize();
     }
 
     @PostConstruct
-    public void initialize() {
+    private void init() {
         velocityMagnitudes.put(KeyCode.UP, new Point2D(0.0, -1.0));
         velocityMagnitudes.put(KeyCode.RIGHT, new Point2D(1.0, 0.0));
         velocityMagnitudes.put(KeyCode.DOWN, new Point2D(0.0, 1.0));
