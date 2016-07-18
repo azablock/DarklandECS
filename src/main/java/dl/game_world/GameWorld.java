@@ -40,7 +40,7 @@ public class GameWorld {
 
     @PostConstruct
     private void init() {
-        playerEntity = em.createEntity("Rycerzyk");
+        playerEntity = em.createEntity("Rycerzyk");//
 
         em.addBehavior(playerEntity, new BPosition(new Point2D(12.0, 10.0)));
         em.addBehavior(playerEntity, new BVelocity());
