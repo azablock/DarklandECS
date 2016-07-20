@@ -1,6 +1,7 @@
 package dl.subsystem;
 
 import com.google.common.collect.ImmutableList;
+import dl.subsystem.ai.SAI;
 import dl.subsystem.movement.SMovement;
 import dl.subsystem.player_input.SPlayerInput;
 import dl.subsystem.render.SRender;
@@ -24,6 +25,9 @@ public class SubsystemManager {
     private SMovement sMovement;
 
     @Autowired
+    private SAI sAI;
+
+    @Autowired
     private SRender sRender;
 
     @NotNull
@@ -39,6 +43,7 @@ public class SubsystemManager {
         subsystems.addAll(asList(
                 sPlayerInput,
                 sMovement,
+                sAI,
                 sRender
         ));
     }

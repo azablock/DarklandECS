@@ -47,8 +47,6 @@ public class RKeyPressed extends ResolverAbstract {
 
         bPlayerInput.keyboardEvents.removeFirst();
         bVelocity.movementSpeedDelta = movementSpeedDelta.add(H_VELOCITY_MAGNITUDE.velocityFor(keyEvent.getCode()));
-
-        LOG.debug("");
     }
 
     @Override
@@ -56,8 +54,8 @@ public class RKeyPressed extends ResolverAbstract {
         LinkedList<KeyEvent> keyboardEvents = em.getBehavior(entity, BPlayerInput.class).keyboardEvents;
 
         if (!keyboardEvents.isEmpty()) {
-            keyboardEvents.removeFirst();
-            LOG.debug("invalid keycode");
+            KeyEvent keyEvent = keyboardEvents.removeFirst();
+            LOG.debug("invalid keycode: " +keyEvent.getCode());
         }
     }
 }

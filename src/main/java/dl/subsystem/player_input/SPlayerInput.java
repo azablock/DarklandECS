@@ -22,7 +22,6 @@ public class SPlayerInput extends Subsystem {
 
         requiredBehaviorTypes.addAll(Arrays.asList(
                 BPlayerInput.class,
-//                CPosition.class,
                 BVelocity.class
         ));
     }

@@ -1,6 +1,6 @@
 package dl.subsystem.render.resolver.renderer;
 
-import dl.behavior.BSprite;
+import dl.behavior.BGraphics;
 import dl.subsystem.ResolverAbstract;
 import dl.subsystem.render.resolver.renderer.helper.TextByPosition;
 import org.jetbrains.annotations.NotNull;
@@ -17,13 +17,8 @@ public class RRenderer extends ResolverAbstract {
 
     @Override
     public void resolve(@NotNull UUID entity) {
-        BSprite bSprite = em.getBehavior(entity, BSprite.class);
+        BGraphics bSprite = em.getBehavior(entity, BGraphics.class);
 
-        textByPosition.convertPositionToText(bSprite.text, entity);
-    }
-
-    @Override
-    public void reject(@NotNull UUID entity) {
-
+//        textByPosition.convertPositionToText(bSprite.text, entity);
     }
 }

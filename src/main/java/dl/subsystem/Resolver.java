@@ -12,7 +12,7 @@ public interface Resolver {
 
     void resolve(@NotNull final UUID entity);
 
-    void reject(@NotNull final UUID entity);
+    default void reject(@NotNull final UUID entity) {}
 
     default void handle(@NotNull final UUID entity) {
         if (passedValidation(entity))

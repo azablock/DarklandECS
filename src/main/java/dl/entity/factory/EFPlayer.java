@@ -1,7 +1,12 @@
-package dl.entity;
+package dl.entity.factory;
 
-import dl.behavior.*;
+import dl.behavior.BPlayerInput;
+import dl.behavior.BPosition;
+import dl.behavior.BVelocity;
+import dl.behavior.Behavior;
+import dl.behavior.factory.graphics.PlayerBGraphicsFactory;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -9,7 +14,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class EPPlayer extends EntityProvider {
+public class EFPlayer extends EntityFactory {
+
+    @Autowired
+    private PlayerBGraphicsFactory bGraphicsFactory;
 
     @NotNull
     @Override
@@ -17,7 +25,7 @@ public class EPPlayer extends EntityProvider {
         return new HashSet<>(Arrays.asList(
                 new BPlayerInput(),
                 new BPosition(),
-                new BSprite(),
+                bGraphicsFactory.newInstance(),
                 new BVelocity()
         ));
     }
@@ -25,6 +33,6 @@ public class EPPlayer extends EntityProvider {
     @NotNull
     @Override
     public String of() {
-        return "Player";
+        return "player";
     }
 }

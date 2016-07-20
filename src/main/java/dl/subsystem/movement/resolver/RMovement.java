@@ -49,9 +49,4 @@ public class RMovement extends ResolverAbstract {
 
         LOG.debug(String.valueOf(cPosition));
     }
-
-    @Override
-    public void reject(@NotNull UUID entity) {
-
-    }
 }

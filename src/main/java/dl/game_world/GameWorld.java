@@ -1,12 +1,9 @@
 package dl.game_world;
 
+import dl.behavior.BGraphics;
 import dl.behavior.BPlayerInput;
-import dl.behavior.BPosition;
-import dl.behavior.BSprite;
-import dl.behavior.BVelocity;
 import dl.entity.EntityManager;
-import dl.entity.EntityProviderService;
-import javafx.geometry.Point2D;
+import dl.entity.EntityProvider;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -23,32 +20,35 @@ public class GameWorld {
     @NotNull
     public final Scene gameScene;
 
+    @NotNull
+    private final Group rootGroup;
+
     @Autowired
     private EntityManager em;
 
     @Autowired
-    private EntityProviderService eps;
+    private EntityProvider ep;
 
     @Autowired
     private GameLoop gameLoop;
 
-    @NotNull
-    private final Group parentGroup;
-
     private UUID playerEntity;
 
     public GameWorld() {
-        parentGroup = new Group();
-        gameScene = new Scene(parentGroup, 800, 600, Color.DARKRED);
+        rootGroup = new Group();
+        gameScene = new Scene(rootGroup, 800, 600, Color.DARKRED);
     }
 
     @PostConstruct
     private void init() {
-        playerEntity = eps.newInstanceOf("Player");
+        playerEntity = ep.newInstanceOf("player");
 
-        gameLoop.start();
 
-        parentGroup.getChildren().add(em.getBehavior(playerEntity, BSprite.class).sprite);
+
+        ep.newInstanceOf("goblin");
+
+
+        rootGroup.getChildren().add(em.getBehavior(playerEntity, BGraphics.class).parentGroup);
 
         gameScene.setOnKeyPressed(event -> {
             BPlayerInput playerInput = em.getBehavior(playerEntity, BPlayerInput.class);
@@ -64,5 +64,7 @@ public class GameWorld {
 
             playerInput.isKeyPressed = false;
         });
+
+        gameLoop.start();
     }
 }

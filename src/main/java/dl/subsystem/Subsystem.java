@@ -13,14 +13,14 @@ import java.util.UUID;
 @Component
 public abstract class Subsystem {
 
-    @Autowired
-    protected EntityManager em;
-
     @NotNull
     protected final Set<Class<? extends Behavior>> requiredBehaviorTypes;
 
     @NotNull
     protected final Set<Resolver> resolvers;
+
+    @Autowired
+    protected EntityManager em;
 
     protected Subsystem() {
         // TODO: 6/22/2016 pobieranie componentTypes z JSON
