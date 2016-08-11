@@ -3,15 +3,15 @@ package dl.behavior;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
 
-public class BPosition implements Behavior {
+public class Position implements Behavior {
 
     public Point2D position;
 
-    public BPosition(Point2D position) {
+    public Position(Point2D position) {
         this.position = position;
     }
 
-    public BPosition() {
+    public Position() {
         position = Point2D.ZERO;
     }
 

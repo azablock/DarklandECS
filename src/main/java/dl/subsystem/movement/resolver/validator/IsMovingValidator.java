@@ -1,7 +1,7 @@
 package dl.subsystem.movement.resolver.validator;
 
-import dl.behavior.BVelocity;
-import dl.subsystem.ValidatorAbstract;
+import dl.behavior.Velocity;
+import dl.subsystem.Validator;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class VIsMoving extends ValidatorAbstract {
+public class IsMovingValidator extends Validator {
 
     @Override
     public boolean validate(@NotNull UUID entity) {
-        BVelocity cVelocity = em.getBehavior(entity, BVelocity.class);
+        Velocity cVelocity = entityManager.getBehavior(entity, Velocity.class);
         return !cVelocity.movementSpeedDelta.equals(Point2D.ZERO);
     }
 }

@@ -16,10 +16,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         System.out.println("https://www.youtube.com/watch?v=U03XXzcThGU");
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("dl/meta-info/darkland-spring-context.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("dl/META-INF/darkland-spring-context.xml");
         GameWorld gameWorld = applicationContext.getBean(GameWorld.class);
 
-        primaryStage.setScene(gameWorld.gameScene);
+        primaryStage.setScene(gameWorld.gameScene.get());
+        primaryStage.setTitle("Darkland");
         primaryStage.show();
     }
 }

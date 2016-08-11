@@ -1,6 +1,6 @@
 package dl.behavior.factory.graphics;
 
-import dl.behavior.BGraphics;
+import dl.behavior.Graphics;
 import dl.behavior.factory.BehaviorFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlayerBGraphicsFactory implements BehaviorFactory<BGraphics> {
+public class PlayerBGraphicsFactory implements BehaviorFactory<Graphics> {
 
     @Value("dl/assets/sprites/player.png")
     private String spritePath;
 
     @NotNull
     @Override
-    public BGraphics newInstance() {
-        BGraphics bGraphics = new BGraphics();
+    public Graphics newInstance() {
+        Graphics bGraphics = new Graphics();
         ImageView imageView = new ImageView(new Image(spritePath));
 
         imageView.setFitHeight(64);

@@ -1,12 +1,12 @@
 package dl.subsystem.movement.resolver.helper;
 
-import dl.behavior.BPosition;
+import dl.behavior.Position;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
 
-public class HChangePosition {
+public class ChangePositionHelper {
 
-    public static void changePosition(@NotNull BPosition cPosition, @NotNull final Point2D movementVector) {
+    public static void changePosition(@NotNull Position cPosition, @NotNull final Point2D movementVector) {
         cPosition.position = cPosition.position.add(movementVector);
     }
 }

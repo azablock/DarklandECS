@@ -1,21 +1,18 @@
 package dl.entity;
 
-import dl.behavior.BPosition;
-import dl.behavior.BVelocity;
+import dl.behavior.Position;
+import dl.behavior.Velocity;
 import dl.behavior.Behavior;
 import dl.test.BaseSpringTest;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -27,25 +24,25 @@ public class EntityManagerTest extends BaseSpringTest {
     private Logger LOG = LoggerFactory.getLogger(EntityManagerTest.class);
 
     @Autowired
-    private EntityManager em;
+    private EntityManager entityManager;
 
     private UUID entity;
 
     @Before
     public void prepareTestEntity() throws Exception {
-        LOG.debug(String.valueOf(em.entityCount()));
-        entity = em.createEntity();
+        LOG.debug(String.valueOf(entityManager.entityCount()));
+        entity = entityManager.createEntity();
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenAddingBehaviorOfAlreadyPossessedType() throws Exception {
         //given
-        Behavior bPosition = mock(BPosition.class);
-        Behavior anotherBPosition = mock(BPosition.class);
+        Behavior position = mock(Position.class);
+        Behavior anotherPosition = mock(Position.class);
 
         //when
-        em.addBehavior(entity, bPosition);
-        em.addBehavior(entity, anotherBPosition);
+        entityManager.addBehavior(entity, position);
+        entityManager.addBehavior(entity, anotherPosition);
 
         //then
     }
@@ -53,81 +50,82 @@ public class EntityManagerTest extends BaseSpringTest {
     @Test
     public void shouldAddTwoBehaviorsWithDifferentTypes() throws Exception {
         //given
-        Behavior bPosition = mock(BPosition.class);
-        Behavior cVelocity = mock(BVelocity.class);
+        Behavior position = mock(Position.class);
+        Behavior velocity = mock(Velocity.class);
 
         //when
-        em.addBehavior(entity, bPosition);
-        em.addBehavior(entity, cVelocity);
+        entityManager.addBehavior(entity, position);
+        entityManager.addBehavior(entity, velocity);
 
         //then
-        assertThat(em.behaviorCount(), is(2));
+        assertThat(entityManager.behaviorCount(), is(2));
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenRemovingNonPossessedBehavior() throws Exception {
         //given
-        Behavior bPosition = new BPosition();
+        Behavior position = new Position();
 
         //when
-        em.addBehavior(entity, bPosition);
-        em.removeBehavior(entity, BVelocity.class);
+        entityManager.addBehavior(entity, position);
+        entityManager.removeBehavior(entity, Velocity.class);
+
         //then
     }
 
     @Test
     public void shouldRemovePossessedBehaviorByBehaviorType() throws Exception {
         //given
-        Behavior bPosition = mock(BPosition.class);
+        Behavior bPosition = mock(Position.class);
 
         //when
-        em.addBehavior(entity, bPosition);
-        em.removeBehavior(entity, bPosition.getClass());
+        entityManager.addBehavior(entity, bPosition);
+        entityManager.removeBehavior(entity, bPosition.getClass());
 
         //then
-        assertThat(em.behaviorCount(), is(0));
+        assertThat(entityManager.behaviorCount(), is(0));
     }
 
     @Test
     public void shouldRemovePossessedBehaviorByReference() throws Exception {
         //given
-        Behavior bPosition = mock(BPosition.class);
+        Behavior position = mock(Position.class);
 
         //when
-        em.addBehavior(entity, bPosition);
-        em.removeBehavior(entity, bPosition);
+        entityManager.addBehavior(entity, position);
+        entityManager.removeBehavior(entity, position);
 
         //then
-        assertThat(em.behaviorCount(), is(0));
+        assertThat(entityManager.behaviorCount(), is(0));
     }
 
     @Test
     public void shouldCollectAllBehaviorsOfType() throws Exception {
         //given
         for (int i = 0; i < 3; i++) {
-            UUID someEntity = em.createEntity();
-            em.addBehavior(someEntity, new BPosition());
+            UUID someEntity = entityManager.createEntity();
+            entityManager.addBehavior(someEntity, new Position());
         }
 
         //when
-        Collection<BPosition> allBehaviorsOfType = em.allBehaviorsOfType(BPosition.class);
-        Set<UUID> entitiesWithPosition = em.entitiesPossessingBehavior(BPosition.class);
+        Collection<Position> allPositions = entityManager.allBehaviorsOfType(Position.class);
+        Set<UUID> entitiesWithPosition = entityManager.entitiesPossessingBehavior(Position.class);
 
         //then
-        assertThat(allBehaviorsOfType.size(), is(3));
+        assertThat(allPositions.size(), is(3));
         assertThat(entitiesWithPosition.size(), is(3));
     }
 
     @Test
     public void shouldProperlyVerifyBehaviorPossession() throws Exception {
         //given
-        Behavior bPosition = new BPosition();
+        Behavior position = new Position();
 
         //when
-        em.addBehavior(entity, bPosition);
+        entityManager.addBehavior(entity, position);
 
         //then
-        assertTrue(em.hasBehavior(entity, BPosition.class));
+        assertTrue(entityManager.hasBehavior(entity, Position.class));
     }
 
     @Test
@@ -135,9 +133,9 @@ public class EntityManagerTest extends BaseSpringTest {
         //given
 
         //when
-        em.killEntity(entity);
+        entityManager.killEntity(entity);
 
         //then
-        assertThat(em.entityCount(), is(0));
+        assertThat(entityManager.entityCount(), is(0));
     }
 }

@@ -1,9 +1,11 @@
 package dl.game_world;
 
-import dl.behavior.BGraphics;
-import dl.behavior.BPlayerInput;
+import dl.behavior.Graphics;
+import dl.behavior.PlayerInput;
 import dl.entity.EntityManager;
 import dl.entity.EntityProvider;
+import dl.entity.factory.GoblinFactory;
+import dl.entity.factory.PlayerFactory;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -12,22 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Optional;
 import java.util.UUID;
+
+import static java.util.Optional.*;
 
 @Component
 public class GameWorld {
 
-    @NotNull
-    public final Scene gameScene;
+    public final Optional<Scene> gameScene;
 
     @NotNull
     private final Group rootGroup;
 
     @Autowired
-    private EntityManager em;
+    private EntityManager entityManager;
 
     @Autowired
-    private EntityProvider ep;
+    private EntityProvider entityProvider;
 
     @Autowired
     private GameLoop gameLoop;
@@ -36,22 +40,19 @@ public class GameWorld {
 
     public GameWorld() {
         rootGroup = new Group();
-        gameScene = new Scene(rootGroup, 800, 600, Color.DARKRED);
+        gameScene = of(new Scene(rootGroup, 800, 600, Color.DARKRED));
     }
 
     @PostConstruct
     private void init() {
-        playerEntity = ep.newInstanceOf("player");
+        playerEntity = entityProvider.newInstanceOf("player");
+        rootGroup.getChildren().add(entityManager.getBehavior(playerEntity, Graphics.class).parentGroup);
 
+        UUID goblinEntity = entityProvider.newInstanceOf("goblin");
+        rootGroup.getChildren().add(entityManager.getBehavior(goblinEntity, Graphics.class).parentGroup);
 
-
-        ep.newInstanceOf("goblin");
-
-
-        rootGroup.getChildren().add(em.getBehavior(playerEntity, BGraphics.class).parentGroup);
-
-        gameScene.setOnKeyPressed(event -> {
-            BPlayerInput playerInput = em.getBehavior(playerEntity, BPlayerInput.class);
+        gameScene.get().setOnKeyPressed(event -> {
+            PlayerInput playerInput = entityManager.getBehavior(playerEntity, PlayerInput.class);
 
             if (!playerInput.isKeyPressed) {
                 playerInput.keyboardEvents.addLast(event);
@@ -59,8 +60,8 @@ public class GameWorld {
             }
         });
 
-        gameScene.setOnKeyReleased(event -> {
-            BPlayerInput playerInput = em.getBehavior(playerEntity, BPlayerInput.class);
+        gameScene.get().setOnKeyReleased(event -> {
+            PlayerInput playerInput = entityManager.getBehavior(playerEntity, PlayerInput.class);
 
             playerInput.isKeyPressed = false;
         });

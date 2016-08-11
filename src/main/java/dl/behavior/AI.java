@@ -1,11 +1,13 @@
 package dl.behavior;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 
-public class BAI implements Behavior {
+public class AI implements Behavior {
 
     @NotNull
     public final Double reactionMillis;
@@ -16,11 +18,15 @@ public class BAI implements Behavior {
     @NotNull
     public final LinkedList<String> actions;
 
-    public BAI() {
+    public AI() {
+        actions = new LinkedList<>();
         reactionMillis = 1500.0;
         timeline = new Timeline();
+
         timeline.setCycleCount(Timeline.INDEFINITE);
-        actions = new LinkedList<>();
+        timeline.getKeyFrames().add(new KeyFrame(
+            Duration.millis(reactionMillis),
+            event -> actions.addLast("speaking")));
     }
 
     @NotNull

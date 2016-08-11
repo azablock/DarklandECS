@@ -1,7 +1,7 @@
 package dl.subsystem.movement.resolver.validator;
 
-import dl.behavior.BVelocity;
-import dl.subsystem.ValidatorAbstract;
+import dl.behavior.Velocity;
+import dl.subsystem.Validator;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -10,11 +10,11 @@ import java.util.UUID;
 
 //nie ten dl.subsystem
 @Component
-public class VReachedMaxSpeed extends ValidatorAbstract {
+public class ReachedMaxSpeedValidator extends Validator {
 
     @Override
     public boolean validate(@NotNull UUID entity) {
-        BVelocity cVelocity = em.getBehavior(entity, BVelocity.class);
+        Velocity cVelocity = entityManager.getBehavior(entity, Velocity.class);
         Point2D currentSpeed = cVelocity.movementVector;
         Point2D movementSpeedDelta = cVelocity.movementSpeedDelta;
 

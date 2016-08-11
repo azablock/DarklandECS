@@ -13,12 +13,13 @@ import java.util.UUID;
 public abstract class EntityFactory {
 
     @Autowired
-    protected EntityManager em;
+    protected EntityManager entityManager;
 
     public final UUID newInstance() {
-        UUID entity = em.createEntity(of());
+        UUID entity = entityManager.createEntity(of());
+
         behaviorSignature()
-                .forEach(behavior -> em.addBehavior(entity, behavior));
+                .forEach(behavior -> entityManager.addBehavior(entity, behavior));
 
         return entity;
     }

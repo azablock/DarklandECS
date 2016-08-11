@@ -1,8 +1,8 @@
 package dl.entity.factory;
 
-import dl.behavior.BPlayerInput;
-import dl.behavior.BPosition;
-import dl.behavior.BVelocity;
+import dl.behavior.PlayerInput;
+import dl.behavior.Position;
+import dl.behavior.Velocity;
 import dl.behavior.Behavior;
 import dl.behavior.factory.graphics.PlayerBGraphicsFactory;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class EFPlayer extends EntityFactory {
+public class PlayerFactory extends EntityFactory {
 
     @Autowired
     private PlayerBGraphicsFactory bGraphicsFactory;
@@ -23,10 +23,10 @@ public class EFPlayer extends EntityFactory {
     @Override
     public Set<Behavior> behaviorSignature() {
         return new HashSet<>(Arrays.asList(
-                new BPlayerInput(),
-                new BPosition(),
+                new PlayerInput(),
+                new Position(),
                 bGraphicsFactory.newInstance(),
-                new BVelocity()
+                new Velocity()
         ));
     }
 

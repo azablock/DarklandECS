@@ -3,12 +3,12 @@ package dl.behavior;
 import javafx.scene.Group;
 import org.jetbrains.annotations.NotNull;
 
-public class BGraphics implements Behavior {
+public class Graphics implements Behavior {
 
     @NotNull
     public final Group parentGroup;
 
-    public BGraphics() {
+    public Graphics() {
         parentGroup = new Group();
     }
 

@@ -1,9 +1,9 @@
 package dl.subsystem.render;
 
-import dl.behavior.BGraphics;
-import dl.behavior.BPosition;
+import dl.behavior.Graphics;
+import dl.behavior.Position;
 import dl.subsystem.Subsystem;
-import dl.subsystem.render.resolver.renderer.RRenderer;
+import dl.subsystem.render.resolver.renderer.SpriteRenderResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,18 +11,20 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
 @Component
-public class SRender extends Subsystem {
+public class RenderSubsystem extends Subsystem {
 
     @Autowired
-    private RRenderer rRenderer;
+    private SpriteRenderResolver spriteRenderResolver;
 
     @PostConstruct
     private void init() {
-        this.resolvers.add(rRenderer);
+        resolvers.addAll(Arrays.asList(
+                spriteRenderResolver
+        ));
 
         this.requiredBehaviorTypes.addAll(Arrays.asList(
-                BPosition.class,
-                BGraphics.class
+                Position.class,
+                Graphics.class
         ));
     }
 }

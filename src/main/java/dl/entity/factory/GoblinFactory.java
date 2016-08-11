@@ -1,6 +1,6 @@
 package dl.entity.factory;
 
-import dl.behavior.BAI;
+import dl.behavior.AI;
 import dl.behavior.Behavior;
 import dl.behavior.factory.graphics.GoblinBGraphicsFactory;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class EFGoblin extends EntityFactory {
+public class GoblinFactory extends EntityFactory {
 
     @Autowired
     private GoblinBGraphicsFactory bGraphicsFactory;
@@ -21,7 +21,7 @@ public class EFGoblin extends EntityFactory {
     @Override
     public Set<Behavior> behaviorSignature() {
         return new HashSet<>(Arrays.asList(
-                new BAI(),
+                new AI(),
                 bGraphicsFactory.newInstance()
         ));
 

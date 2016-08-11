@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 
-public class BPlayerInput implements Behavior {
+public class PlayerInput implements Behavior {
 
     @NotNull
     public final LinkedList<MouseEvent> mouseEvents;
@@ -16,7 +16,7 @@ public class BPlayerInput implements Behavior {
 
     public boolean isKeyPressed;
 
-    public BPlayerInput() {
+    public PlayerInput() {
         mouseEvents = new LinkedList<>();
         keyboardEvents = new LinkedList<>();
         isKeyPressed = false;

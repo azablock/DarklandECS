@@ -5,24 +5,17 @@ import javafx.scene.input.KeyCode;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Set;
 
 @Component
-public class HVelocityMagnitude {
+public class VelocityMagnitudeHelper {
 
-    private static HashMap<KeyCode, Point2D> velocityMagnitudes;
+    private final HashMap<KeyCode, Point2D> velocityMagnitudes;
 
-    @NotNull
-    public static final HVelocityMagnitude H_VELOCITY_MAGNITUDE = new HVelocityMagnitude();
-
-    private HVelocityMagnitude() {
+    public VelocityMagnitudeHelper() {
         velocityMagnitudes = new HashMap<>();
-    }
 
-    @PostConstruct
-    private void init() {
         velocityMagnitudes.put(KeyCode.UP, new Point2D(0.0, -1.0));
         velocityMagnitudes.put(KeyCode.RIGHT, new Point2D(1.0, 0.0));
         velocityMagnitudes.put(KeyCode.DOWN, new Point2D(0.0, 1.0));

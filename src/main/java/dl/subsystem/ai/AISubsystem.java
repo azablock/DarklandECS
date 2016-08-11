@@ -1,9 +1,8 @@
-package dl.subsystem.player_input;
+package dl.subsystem.ai;
 
-import dl.behavior.BPlayerInput;
-import dl.behavior.BVelocity;
+import dl.behavior.AI;
 import dl.subsystem.Subsystem;
-import dl.subsystem.player_input.resolver.key_pressed.RKeyPressed;
+import dl.subsystem.ai.resolver.speak.SpeakResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,18 +10,19 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
 @Component
-public class SPlayerInput extends Subsystem {
+public class AISubsystem extends Subsystem {
 
     @Autowired
-    private RKeyPressed rKeyPressed;
+    private SpeakResolver speakResolver;
 
     @PostConstruct
     private void init() {
-        resolvers.add(rKeyPressed);
+        resolvers.addAll(Arrays.asList(
+                speakResolver
+        ));
 
         requiredBehaviorTypes.addAll(Arrays.asList(
-                BPlayerInput.class,
-                BVelocity.class
+              AI.class
         ));
     }
 }
