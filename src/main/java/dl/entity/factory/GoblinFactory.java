@@ -1,8 +1,7 @@
 package dl.entity.factory;
 
-import dl.behavior.AI;
 import dl.behavior.Behavior;
-import dl.behavior.factory.graphics.GoblinBGraphicsFactory;
+import dl.behavior.builder.GraphicsBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,21 +14,14 @@ import java.util.Set;
 public class GoblinFactory extends EntityFactory {
 
     @Autowired
-    private GoblinBGraphicsFactory bGraphicsFactory;
+    private GraphicsBuilder graphicsBuilder;
 
     @NotNull
     @Override
     public Set<Behavior> behaviorSignature() {
         return new HashSet<>(Arrays.asList(
-                new AI(),
-                bGraphicsFactory.newInstance()
+                graphicsBuilder.spriteName("goblin").build()
         ));
 
-    }
-
-    @NotNull
-    @Override
-    public String of() {
-        return "goblin";
     }
 }

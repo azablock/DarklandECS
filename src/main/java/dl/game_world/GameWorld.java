@@ -4,8 +4,6 @@ import dl.behavior.Graphics;
 import dl.behavior.PlayerInput;
 import dl.entity.EntityManager;
 import dl.entity.EntityProvider;
-import dl.entity.factory.GoblinFactory;
-import dl.entity.factory.PlayerFactory;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -17,7 +15,7 @@ import javax.annotation.PostConstruct;
 import java.util.Optional;
 import java.util.UUID;
 
-import static java.util.Optional.*;
+import static java.util.Optional.of;
 
 @Component
 public class GameWorld {

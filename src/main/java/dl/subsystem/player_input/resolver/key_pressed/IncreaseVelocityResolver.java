@@ -1,12 +1,11 @@
 package dl.subsystem.player_input.resolver.key_pressed;
 
+import dl.behavior.Intelligence;
 import dl.behavior.PlayerInput;
-import dl.behavior.Velocity;
 import dl.subsystem.Resolver;
-import dl.subsystem.player_input.resolver.key_pressed.helper.VelocityMagnitudeHelper;
+import dl.subsystem.player_input.resolver.key_pressed.helper.DirectionByEventCodeHelper;
 import dl.subsystem.player_input.resolver.key_pressed.validator.HasKeyEventsValidator;
 import dl.subsystem.player_input.resolver.key_pressed.validator.ProperKeyCodeValidator;
-import javafx.geometry.Point2D;
 import javafx.scene.input.KeyEvent;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -20,10 +19,10 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 @Component
-public class KeyPressedResolver extends Resolver {
+public class IncreaseVelocityResolver extends Resolver {
 
     @NotNull
-    private static final Logger LOG = LoggerFactory.getLogger(KeyPressedResolver.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IncreaseVelocityResolver.class);
 
     @Autowired
     private HasKeyEventsValidator hasKeyEventsValidator;
@@ -32,7 +31,7 @@ public class KeyPressedResolver extends Resolver {
     private ProperKeyCodeValidator properKeyCodeValidator;
 
     @Autowired
-    private VelocityMagnitudeHelper velocityMagnitudeHelper;
+    private DirectionByEventCodeHelper directionByEventCodeHelper;
 
     @PostConstruct
     private void init() {
@@ -44,16 +43,14 @@ public class KeyPressedResolver extends Resolver {
 
     @Override
     public void resolve(@NotNull UUID entity) {
-        PlayerInput bPlayerInput = entityManager.getBehavior(entity, PlayerInput.class);
-        Velocity velocity = entityManager.getBehavior(entity, Velocity.class);
+        PlayerInput playerInput = entityManager.getBehavior(entity, PlayerInput.class);
+        Intelligence intelligence = entityManager.getBehavior(entity, Intelligence.class);
+        KeyEvent keyEvent = playerInput.keyboardEvents.removeFirst();
 
-        KeyEvent keyEvent = bPlayerInput.keyboardEvents.getFirst();
-        Point2D movementSpeedDelta = velocity.movementSpeedDelta;
+        //fixme nie wiem czy to dorbe jest
+        intelligence.actions.get("keyPressed").actionCount++;
 
-        bPlayerInput.keyboardEvents.removeFirst();
-        velocity.movementSpeedDelta = movementSpeedDelta.add(velocityMagnitudeHelper.velocityFor(keyEvent.getCode()));
-
-        LOG.debug(entityManager.nameFor(entity) + "has pressed " + keyEvent.getCode());
+        LOG.debug(entityManager.nameFor(entity) + " pressed " + keyEvent.getCode());
     }
 
     @Override

@@ -11,19 +11,13 @@ import java.util.*;
 public class EntityManager {
 
     @NotNull
-    private final List<UUID> entities;
+    private final List<UUID> entities = new ArrayList<>();
 
     @NotNull
-    private final Map<UUID, String> entityHumanReadableNames;
+    private final Map<UUID, String> entityHumanReadableNames = new HashMap<>();
 
     @NotNull
-    private final Map<Class<? extends Behavior>, HashMap<UUID, ? extends Behavior>> behaviorStores;
-
-    public EntityManager() {
-        entities = new ArrayList<>();
-        entityHumanReadableNames = new HashMap<>();
-        behaviorStores = new HashMap<>();
-    }
+    private final Map<Class<? extends Behavior>, HashMap<UUID, ? extends Behavior>> behaviorStores = new HashMap<>();
 
     public <T extends Behavior> void addBehavior(@NotNull final UUID entity,
                                                  @NotNull final T behavior) {
@@ -101,9 +95,9 @@ public class EntityManager {
         Set<T> behaviors = new HashSet<>();
 
         behaviorStores.values().forEach(store -> {
-            T BehaviorFromThisEntity = (T) store.get(entity);
-            if (BehaviorFromThisEntity != null)
-                behaviors.add(BehaviorFromThisEntity);
+            T behaviorFromThisEntity = (T) store.get(entity);
+            if (behaviorFromThisEntity != null)
+                behaviors.add(behaviorFromThisEntity);
         });
 
         return behaviors;
@@ -134,9 +128,9 @@ public class EntityManager {
     public Set<UUID> entitiesPossessingBehaviors(@NotNull final Set<Class<? extends Behavior>> behaviors) {
         Set<UUID> withGivenBehaviors = new HashSet<>();
 
-        behaviors.forEach(Behavior ->
+        behaviors.forEach(behavior ->
                 entities.stream().filter(entity ->
-                        behaviorStores.get(Behavior).containsKey(entity)).forEach(withGivenBehaviors::add));
+                        behaviorStores.get(behavior).containsKey(entity)).forEach(withGivenBehaviors::add));
 
         return withGivenBehaviors;
     }

@@ -14,30 +14,32 @@ import java.util.UUID;
 public abstract class Subsystem {
 
     @NotNull
-    protected final Set<Class<? extends Behavior>> requiredBehaviorTypes;
-
-    @NotNull
-    protected final Set<Resolver> resolvers;
+    protected final Set<Resolver> resolvers = new HashSet<>();
 
     @Autowired
-    protected EntityManager em;
-
-    protected Subsystem() {
-        // TODO: 6/22/2016 pobieranie componentTypes z JSON
-//        requiredBehaviorTypes = new HashSet<>(SubsystemInitializerService.initialize(this.getClass().getName()));
-        requiredBehaviorTypes = new HashSet<>();
-        resolvers = new HashSet<>();
-    }
+    protected EntityManager entityManager;
 
     public final void update() {
-        em.entitiesPossessingBehaviors(requiredBehaviorTypes)
+        entityManager
+                .entitiesPossessingBehaviors(requiredBehaviorTypes())
                 .stream()
                 .forEach(this::process);
     }
 
     private void process(@NotNull final UUID entity) {
-        resolvers.stream()
+        resolvers
+                .stream()
                 .forEach(resolver -> resolver.handle(entity));
+    }
+
+    public Set<Class<? extends Behavior>> requiredBehaviorTypes() {
+        Set<Class<? extends Behavior>> behaviorTypes = new HashSet<>();
+
+        resolvers
+                .stream()
+                .forEach(resolver -> behaviorTypes.addAll(resolver.requiredBehaviorTypes()));
+
+        return behaviorTypes;
     }
 
     @Override

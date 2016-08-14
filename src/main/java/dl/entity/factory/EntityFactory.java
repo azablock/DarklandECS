@@ -28,5 +28,7 @@ public abstract class EntityFactory {
     public abstract Set<Behavior> behaviorSignature();
 
     @NotNull
-    public abstract String of();
+    private String of() {
+        return getClass().getSimpleName().toLowerCase().split("factory")[0];
+    }
 }

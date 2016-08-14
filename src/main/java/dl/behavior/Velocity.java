@@ -1,25 +1,12 @@
 package dl.behavior;
 
 import javafx.geometry.Point2D;
-import org.jetbrains.annotations.NotNull;
 
-public class Velocity implements Behavior {
+public class Velocity extends Behavior {
 
-    public Point2D movementVector;
+    public final Double maxSpeed = 10.0;
 
-    public Point2D movementSpeedDelta;
+    public Point2D movementVector = Point2D.ZERO;
 
-    public final Double maxSpeed;
-
-    public Velocity() {
-        movementVector = Point2D.ZERO;
-        movementSpeedDelta = Point2D.ZERO;
-        maxSpeed = 10.0;
-    }
-
-    @NotNull
-    @Override
-    public String simpleName() {
-        return "Velocity";
-    }
+    public Point2D movementSpeedDelta = Point2D.ZERO;
 }

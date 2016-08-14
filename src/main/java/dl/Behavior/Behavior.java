@@ -2,8 +2,10 @@ package dl.behavior;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface Behavior {
+public abstract class Behavior {
 
     @NotNull
-    String simpleName();
+    public final String simpleName() {
+        return getClass().getSimpleName();
+    }
 }

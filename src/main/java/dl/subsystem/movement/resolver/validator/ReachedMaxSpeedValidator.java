@@ -1,11 +1,15 @@
 package dl.subsystem.movement.resolver.validator;
 
+import dl.behavior.Behavior;
 import dl.behavior.Velocity;
 import dl.subsystem.Validator;
 import javafx.geometry.Point2D;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 //nie ten dl.subsystem
@@ -23,5 +27,12 @@ public class ReachedMaxSpeedValidator extends Validator {
                 currentSpeed.getY() + movementSpeedDelta.getY());
 
         return newVelocityMagnitude.magnitude() <= cVelocity.maxSpeed;
+    }
+
+    @Override
+    public Set<Class<? extends Behavior>> requiredBehaviorTypes() {
+        return new HashSet<>(Arrays.asList(
+                Velocity.class
+        ));
     }
 }

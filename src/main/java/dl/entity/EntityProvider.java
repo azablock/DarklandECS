@@ -15,7 +15,7 @@ public class EntityProvider {
     private Map<String, EntityFactory> entityFactories;
 
     @NotNull
-    public <T extends EntityFactory> UUID newInstanceOf(@NotNull final String id) {
+    public UUID newInstanceOf(@NotNull final String id) {
         return entityFactories.get(id + "Factory").newInstance();
     }
 }

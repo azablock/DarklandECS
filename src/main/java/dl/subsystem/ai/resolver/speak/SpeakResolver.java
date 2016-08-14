@@ -1,6 +1,5 @@
 package dl.subsystem.ai.resolver.speak;
 
-import dl.behavior.AI;
 import dl.subsystem.Resolver;
 import dl.subsystem.ai.resolver.speak.validator.HasActionsToPerformValidator;
 import dl.subsystem.ai.resolver.speak.validator.StartedSpeakingValidator;
@@ -36,15 +35,15 @@ public class SpeakResolver extends Resolver {
 
     @Override
     public void resolve(@NotNull UUID entity) {
-        AI bAI = entityManager.getBehavior(entity, AI.class);
-
-        LOG.debug(entityManager.nameFor(entity) + " is performing action <" + bAI.actions.removeFirst() + ">");
+//        AI bAI = entityManager.getBehavior(entity, AI.class);
+//
+//        LOG.debug(entityManager.nameFor(entity) + " is performing action <" + bAI.actions.removeFirst() + ">");
     }
 
     @Override
     public void reject(@NotNull UUID entity) {
-        AI bAI = entityManager.getBehavior(entity, AI.class);
-
-        bAI.timeline.play();
+//        AI bAI = entityManager.getBehavior(entity, AI.class);
+//
+//        bAI.timeline.play();
     }
 }
